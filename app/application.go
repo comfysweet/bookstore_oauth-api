@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/comfysweet/bookstore_oauth-api/http"
 	"github.com/comfysweet/bookstore_oauth-api/repository/db"
+	"github.com/comfysweet/bookstore_oauth-api/repository/rest"
 	"github.com/comfysweet/bookstore_oauth-api/services"
 	"github.com/gin-gonic/gin"
 )
@@ -12,7 +13,7 @@ var (
 )
 
 func StartApplication() {
-	atHandler := http.NewAccessTokenHandler(services.NewService(db.NewRepository()))
+	atHandler := http.NewAccessTokenHandler(services.NewService(rest.NewRepository(), db.NewRepository()))
 
 	router.GET("/oauth/access_token/:access_token_id", atHandler.GetById)
 	router.POST("/oauth/access_token", atHandler.Create)
